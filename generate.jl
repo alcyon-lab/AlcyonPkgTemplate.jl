@@ -4,15 +4,19 @@ t = Template(
     user="alcyon-lab",
     authors=["Alcyon Lab"],
     julia=v"1.2.0",
-    dir=".",
+    dir=length(ARGS) > 1 ? ARGS[2] : ".",
     plugins=[
-        ProjectFile(; version=v"1.0.0"),
+        ProjectFile(; version=v"0.1.0"),
         Tests(; project=true),
+        Git(; branch="master"),
         Readme(;),
         License(; name="MIT", path=nothing, destination="LICENSE"),
         Documenter{NoDeploy}(;),
-        !TagBot
+        !TagBot,
+        !GitHubActions,
+        !CompatHelper,
+        !Dependabot
     ],
 )
 
-t("MyPackage.jl")
+t(ARGS[1])
